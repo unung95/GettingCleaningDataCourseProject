@@ -1,39 +1,33 @@
+## Code Book 
 
-## Main Directory : UCI HAR Dataset
+This steps of R script of the course project
 
-## mergecol : Function to load data list with pattern *.txt and combine all column as a alphabet
+1. Determine Main Directory : UCI HAR Dataset
 
-## dttrain : 
-mergecol(paste(maindir,'/train',sep='')) -> dttrain
-mergecol(paste(maindir,'/test',sep='')) -> dttest
+2. Create function mergecol : Function to load data list with pattern *.txt and combine all column as a alphabet
 
-rbind(dttrain,dttest) -> dtallfeatures
+3. Create dttrain : Load training folder and create dttest : Load test folder, join dttrain & dttest (rbind) -> dtallfeatures
 
-read.table(paste(maindir,'/activity_labels.txt',sep='')) -> activitylabel
-read.table(paste(maindir,'/features.txt',sep='')) -> featuresname
-as.character(featuresname$V2) -> label
+4. Read table activity and featuresname
 
-gsub("[-|(|)|,]","",label) -> labelx
-c('Subject',labelx,'Activity') -> namesallfeatures
-namesallfeatures -> names(dtallfeatures)
+5. Create label character class featuresname in Column V2
 
-grep(".*mean.*|.*Mean.*",namesallfeatures) -> labelmean
-grep(".*std.*|.*Std.*",namesallfeatures) -> labelstd
+6. Create labelx class with cleaning label from "[-|(|)|,]" using gsub 
 
-sort(c(labelmean,labelstd)) -> numfeatures
+7. Join Subject, labelx and activity label (namesallfeatures)
 
-dtallfeatures[,numfeatures] -> dtmeanstd
+8. Naming dtallfeatures with namesallfeatures
 
-as.factor(dtallfeatures[,1]) -> subjectf
-as.factor(dtallfeatures[,563]) -> activityf
+9. Search column with mean and std labels (labelmean, labelstd)
 
-levels(activityf) <- as.character(activitylabel$V2)
+10. Select dtallfeatures only with numfeatures (labelmean, labelstd)
 
-data.frame(dtmeanstd,subjectf,activityf) -> dtmeanstdsubact
+11. Create dtmeanstdsubact data frame for dtmeanstd, subject and activity factors
 
-aggregate(dtmeanstdsubact,by=list(subject=subjectf,activity=activityf),mean) -> dtres
+12. Average of each variable dtmeanstdsubact for each activity and each subject.
 
-dtres[,-c(89,90)] -> res
+13. Cleaning NA column
 
-write.table(res,paste(maindir,'/independenttidy.txt',sep=''),sep="\t",row.names=FALSE)
+14. Write tidy data to indendepentity.txt
 
+15. OK....
