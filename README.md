@@ -40,6 +40,6 @@ This steps of R script of the course project
 
 13. Cleaning NA column
 
-14. Write tidy data to indendepentity.txt
+14. Write tidy data to indendepentidy.txt
 
 15. OK
